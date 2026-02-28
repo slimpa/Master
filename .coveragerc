@@ -1,0 +1,12 @@
+[run]
+source = face_app
+omit =
+    */__init__.py
+    */tests/*
+    */__pycache__/*
+    *.pyc
+
+[report]
+ignore_errors = True
+show_missing = True
+precision = 1

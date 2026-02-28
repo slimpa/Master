@@ -1,0 +1,27 @@
+- id: SYS_01
+  parent: SR_01
+  description: Sistem mora kontinuirano obrađivati video tok sa kamere.
+
+- id: SYS_02
+  parent: SR_01
+  description: Sistem mora detektovati lice vozača u svakom frejmu.
+
+- id: SYS_03
+  parent: SR_01
+  description: Sistem mora detektovati oči unutar regiona lica.
+
+- id: SYS_04
+  parent: SR_02
+  description: Sistem mora pratiti trajanje zatvorenih očiju kroz vrijeme.
+
+- id: SYS_05
+  parent: SR_03
+  description: Sistem mora omogućiti izbor između instant i vremenskog režima detekcije.
+
+- id: SYS_06
+  parent: SR_04
+  description: Sistem mora omogućiti podešavanje vremenskog praga putem GUI-a.
+
+- id: SYS_07
+  parent: SR_05
+  description: Sistem mora prikazati vizuelni indikator statusa (OPEN, CLOSED, ALERT) na korisničkom interfejsu.

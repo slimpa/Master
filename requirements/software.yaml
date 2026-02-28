@@ -1,0 +1,39 @@
+- id: SWR_01
+  parent: SYS_02
+  module: face_app/recognizer.py
+  description: Sistem mora koristiti OpenCV Haar Cascade za detekciju lica.
+
+- id: SWR_02
+  parent: SYS_03
+  module: face_app/recognizer.py
+  description: Sistem mora detektovati oči unutar regiona detektovanog lica.
+
+- id: SWR_03
+  parent: SYS_04
+  module: face_app/recognizer.py
+  description: Sistem mora implementirati logiku za praćenje trajanja zatvorenih očiju.
+
+- id: SWR_04
+  parent: SYS_05
+  module: face_app/gui.py
+  description: GUI mora omogućiti izbor režima detekcije (instant ili timed).
+
+- id: SWR_05
+  parent: SYS_06
+  module: face_app/gui.py
+  description: GUI mora omogućiti podešavanje vremenskog praga (threshold slider).
+
+- id: SWR_06
+  parent: SYS_07
+  module: face_app/gui.py
+  description: GUI mora prikazivati vizuelni status sistema kroz badge i overlay na video slici.
+
+- id: SWR_07
+  parent: SYS_01
+  module: face_app/gui.py
+  description: Sistem mora omogućiti pokretanje i zaustavljanje video obrade (Start/Stop kontrola).
+
+- id: SWR_08
+  parent: SYS_01
+  module: face_app/gui.py
+  description: Sistem mora omogućiti snimanje trenutnog frejma (Snapshot funkcionalnost).

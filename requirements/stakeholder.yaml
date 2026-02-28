@@ -1,0 +1,14 @@
+- id: SR_01
+  description: Sistem mora nadgledati stanje očiju vozača u realnom vremenu putem kamere.
+
+- id: SR_02
+  description: Sistem mora upozoriti vozača ako drži oči zatvorene duže od definisanog vremenskog praga.
+
+- id: SR_03
+  description: Sistem mora omogućiti izbor režima detekcije (instant ili vremenski).
+
+- id: SR_04
+  description: Sistem mora omogućiti podešavanje vremenskog praga za generisanje upozorenja.
+
+- id: SR_05
+  description: Sistem mora prikazivati vizuelni status sistema (OPEN, CLOSED, ALERT) u realnom vremenu.
