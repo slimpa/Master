@@ -21,8 +21,8 @@ pipeline {
                 sh '''
                     echo "Workspace: $(pwd)"
                     ls -la
-                    python3 --version || true
-                    pip3 --version || true
+                    python3 --version
+                    pip3 --version
                 '''
             }
         }
