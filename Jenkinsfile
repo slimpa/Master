@@ -42,7 +42,7 @@ pipeline {
                 sh '''
                 . .ci_venv/bin/activate
                 mkdir -p reports
-                pytest tests \
+                pytest --json-report --json-report-file=pytest-report.json tests \
                   --ignore=tests/test_gui_branches.py \
                   --ignore=tests/test_gui_missing_branches.py \
                   --ignore=tests/test_gui_remaining_branches.py \
