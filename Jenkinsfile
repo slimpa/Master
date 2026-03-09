@@ -27,11 +27,23 @@ pipeline {
             }
         }
 
+        stage('Create venv') {
+            steps {
+                sh '''
+                    python3 -m venv .ci_venv
+                    . .ci_venv/bin/activate
+                    python --version
+                    pip --version
+                    pip install --upgrade pip
+                '''
+            }
+        }
+
         stage('Install dependencies') {
             steps {
                 sh '''
-                    python3 -m pip install --upgrade pip
-                    pip3 install pytest pytest-cov face-recognition opencv-python pillow pyyaml
+                    . .ci_venv/bin/activate
+                    pip install pytest pytest-cov pyyaml pillow opencv-python face-recognition
                 '''
             }
         }
@@ -39,8 +51,13 @@ pipeline {
         stage('Run tests') {
             steps {
                 sh '''
+                    . .ci_venv/bin/activate
                     mkdir -p reports
-                    pytest tests --junitxml=reports/junit.xml --cov=face_app --cov-report=xml:reports/coverage.xml --cov-report=term-missing
+                    pytest tests \
+                      --junitxml=reports/junit.xml \
+                      --cov=face_app \
+                      --cov-report=xml:reports/coverage.xml \
+                      --cov-report=term-missing
                 '''
             }
         }
