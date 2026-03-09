@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    triggers {
-        cron('0 1 * * *')
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -18,7 +14,16 @@ pipeline {
                 echo "Workspace: $(pwd)"
                 ls -la
                 python3 --version
-                pip3 --version
+                '''
+            }
+        }
+
+        stage('Create venv') {
+            steps {
+                sh '''
+                python3 -m venv .ci_venv
+                . .ci_venv/bin/activate
+                python -m pip install --upgrade pip
                 '''
             }
         }
@@ -26,8 +31,8 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 sh '''
-                python3 -m pip install --upgrade pip
-                pip3 install pytest pytest-cov pillow opencv-python
+                . .ci_venv/bin/activate
+                pip install pytest pytest-cov pillow opencv-python
                 '''
             }
         }
@@ -35,6 +40,7 @@ pipeline {
         stage('Run tests') {
             steps {
                 sh '''
+                . .ci_venv/bin/activate
                 mkdir -p reports
                 pytest tests --junitxml=reports/junit.xml
                 '''
@@ -44,8 +50,8 @@ pipeline {
 
     post {
         always {
-            junit 'reports/junit.xml'
-            archiveArtifacts artifacts: 'reports/**', fingerprint: true
+            junit testResults: 'reports/junit.xml', allowEmptyResults: true
+            archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
         }
     }
 }
