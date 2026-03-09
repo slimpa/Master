@@ -5,10 +5,6 @@ pipeline {
         cron('0 1 * * *')
     }
 
-    options {
-        timestamps()
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -16,27 +12,13 @@ pipeline {
             }
         }
 
-        stage('Show workspace') {
+        stage('Show environment') {
             steps {
                 sh '''
-                    echo "Workspace: $(pwd)"
-                    ls -la
-                    python3 --version
-                    pip3 --version
-                    cmake --version
-                '''
-            }
-        }
-
-        stage('Create venv') {
-            steps {
-                sh '''
-                    rm -rf .ci_venv
-                    python3 -m venv .ci_venv
-                    . .ci_venv/bin/activate
-                    python --version
-                    pip --version
-                    pip install --upgrade pip
+                echo "Workspace: $(pwd)"
+                ls -la
+                python3 --version
+                pip3 --version
                 '''
             }
         }
@@ -44,8 +26,8 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 sh '''
-                    . .ci_venv/bin/activate
-                    pip install pytest pytest-cov pyyaml pillow opencv-python face-recognition
+                python3 -m pip install --upgrade pip
+                pip3 install pytest pytest-cov pillow opencv-python
                 '''
             }
         }
@@ -53,13 +35,8 @@ pipeline {
         stage('Run tests') {
             steps {
                 sh '''
-                    . .ci_venv/bin/activate
-                    mkdir -p reports
-                    pytest tests \
-                      --junitxml=reports/junit.xml \
-                      --cov=face_app \
-                      --cov-report=xml:reports/coverage.xml \
-                      --cov-report=term-missing
+                mkdir -p reports
+                pytest tests --junitxml=reports/junit.xml
                 '''
             }
         }
@@ -67,8 +44,8 @@ pipeline {
 
     post {
         always {
-            junit allowEmptyResults: true, testResults: 'reports/junit.xml'
-            archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/**', fingerprint: true
+            junit 'reports/junit.xml'
+            archiveArtifacts artifacts: 'reports/**', fingerprint: true
         }
     }
 }
