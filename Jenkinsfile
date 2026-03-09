@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        pollSCM('H/2 * * * *')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -21,6 +25,7 @@ pipeline {
         stage('Create venv') {
             steps {
                 sh '''
+                rm -rf .ci_venv
                 python3 -m venv .ci_venv
                 . .ci_venv/bin/activate
                 python -m pip install --upgrade pip
