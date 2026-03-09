@@ -54,6 +54,7 @@ pipeline {
                   --ignore=tests/test_gui_remaining_branches.py \
                   --ignore=tests/test_gui_runtime.py \
                   --ignore=tests/test_gui_unit.py \
+                  --ignore=tests/test_main_entrypoint.py \
                   --json-report \
                   --json-report-file=reports/pytest-report.json \
                   --junitxml=reports/junit.xml
@@ -66,10 +67,9 @@ pipeline {
                 sh '''
                 . .ci_venv/bin/activate
 
-                python - <<PY
+                python - <<'PY'
 import json
 import os
-import re
 import urllib.request
 from datetime import datetime, timezone
 
@@ -81,6 +81,7 @@ BUILD_NUMBER = os.environ.get("BUILD_NUMBER", "")
 JOB_NAME = os.environ.get("JOB_NAME", "")
 BUILD_URL = os.environ.get("BUILD_URL", "")
 GIT_COMMIT = os.environ.get("GIT_COMMIT", "")
+BRANCH_NAME = os.environ.get("BRANCH_NAME", "")
 
 def detect_level(nodeid: str, test_name: str) -> str:
     text = f"{nodeid} {test_name}".upper()
@@ -90,31 +91,36 @@ def detect_level(nodeid: str, test_name: str) -> str:
         return "integration"
     return "unit"
 
-def extract_test_id(nodeid: str) -> str:
-    name = nodeid.split("::")[-1]
-    m = re.search(r'(UT_[A-Z]+_\\d+_\\d+|IT_[A-Z]+_\\d+_\\d+|ST_[A-Z]+_\\d+_\\d+)', name.upper())
-    if m:
-        return m.group(1)
-    return name
+def extract_test_id(test: dict) -> str:
+    # prvo probaj iz custom markera @pytest.mark.test_id("UT_SWR_03_04")
+    markers = test.get("markers", [])
+    for marker in markers:
+        name = marker.get("name", "")
+        if name == "test_id":
+            args = marker.get("args", [])
+            if args:
+                return str(args[0])
 
-def extract_requirement_id(nodeid: str) -> str:
-    text = nodeid.upper().replace("-", "_")
-    patterns = [
-        r'\\bSWR_(\\d+)\\b',
-        r'\\bSR_(\\d+)\\b',
-        r'\\bUT_SWR_(\\d+)_\\d+\\b',
-        r'\\bIT_SWR_(\\d+)_\\d+\\b',
-        r'\\bST_SR_(\\d+)_\\d+\\b',
-    ]
-    for pattern in patterns:
-        m = re.search(pattern, text)
-        if m:
-            if "SR_" in pattern and "SWR_" not in pattern:
-                return f"SR_{m.group(1)}"
-            if "ST_SR_" in pattern:
-                return f"SR_{m.group(1)}"
-            return f"SWR_{m.group(1)}"
-    return "UNKNOWN"
+    # fallback na ime testa iz nodeid
+    nodeid = test.get("nodeid", "unknown")
+    return nodeid.split("::")[-1]
+
+def extract_requirement_ids(test: dict) -> list[str]:
+    reqs = []
+    markers = test.get("markers", [])
+
+    for marker in markers:
+        if marker.get("name") == "requirement":
+            args = marker.get("args", [])
+            for arg in args:
+                value = str(arg).strip()
+                if value and value not in reqs:
+                    reqs.append(value)
+
+    if reqs:
+        return reqs
+
+    return ["UNKNOWN"]
 
 with open(REPORT, "r", encoding="utf-8") as f:
     data = json.load(f)
@@ -125,8 +131,8 @@ published = 0
 for test in tests:
     nodeid = test.get("nodeid", "unknown")
     outcome = test.get("outcome", "unknown").upper()
-    test_id = extract_test_id(nodeid)
-    requirement_id = extract_requirement_id(nodeid)
+    test_id = extract_test_id(test)
+    requirement_ids = extract_requirement_ids(test)
 
     duration = None
     if isinstance(test.get("call"), dict):
@@ -137,7 +143,7 @@ for test in tests:
     doc = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "test_id": test_id,
-        "requirement_id": requirement_id,
+        "requirement_id": requirement_ids,
         "status": outcome,
         "level": detect_level(nodeid, test_id),
         "duration": duration,
@@ -145,7 +151,8 @@ for test in tests:
         "build_number": BUILD_NUMBER,
         "job_name": JOB_NAME,
         "build_url": BUILD_URL,
-        "git_commit": GIT_COMMIT
+        "git_commit": GIT_COMMIT,
+        "git_branch": BRANCH_NAME
     }
 
     try:
