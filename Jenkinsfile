@@ -2,22 +2,30 @@ pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Test environment') {
+        stage('Install Python dependencies') {
             steps {
                 sh '''
-                    echo "Testing shell access"
-                    uname -a || true
-                    python3 --version || python --version || true
-                    pip3 --version || pip --version || true
-                    pytest --version || true
+                python3 -m pip install --upgrade pip
+                pip3 install pytest
+                if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
                 '''
             }
         }
+
+        stage('Run tests') {
+            steps {
+                sh '''
+                pytest tests
+                '''
+            }
+        }
+
     }
 }
