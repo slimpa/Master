@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.11'
-            args '-u root:root'
-        }
-    }
+    agent any
 
     triggers {
         cron('0 1 * * *')
@@ -26,8 +21,8 @@ pipeline {
                 sh '''
                     echo "Workspace: $(pwd)"
                     ls -la
-                    python --version
-                    pip --version
+                    python3 --version || true
+                    pip3 --version || true
                 '''
             }
         }
@@ -35,9 +30,8 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 sh '''
-                    python -m pip install --upgrade pip
-                    pip install pytest pytest-cov
-                    pip install face-recognition opencv-python pillow pyyaml
+                    python3 -m pip install --upgrade pip
+                    pip3 install pytest pytest-cov face-recognition opencv-python pillow pyyaml
                 '''
             }
         }
@@ -46,11 +40,7 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p reports
-                    pytest tests \
-                      --junitxml=reports/junit.xml \
-                      --cov=face_app \
-                      --cov-report=xml:reports/coverage.xml \
-                      --cov-report=term-missing
+                    pytest tests --junitxml=reports/junit.xml --cov=face_app --cov-report=xml:reports/coverage.xml --cov-report=term-missing
                 '''
             }
         }
