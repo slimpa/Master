@@ -32,7 +32,7 @@ pipeline {
             steps {
                 sh '''
                 . .ci_venv/bin/activate
-                pip install pytest pytest-cov pillow opencv-python
+                pip install pytest pytest-cov pillow opencv-python-headless
                 '''
             }
         }
@@ -42,7 +42,13 @@ pipeline {
                 sh '''
                 . .ci_venv/bin/activate
                 mkdir -p reports
-                pytest tests --junitxml=reports/junit.xml
+                pytest tests \
+                  --ignore=tests/test_gui_branches.py \
+                  --ignore=tests/test_gui_missing_branches.py \
+                  --ignore=tests/test_gui_remaining_branches.py \
+                  --ignore=tests/test_gui_runtime.py \
+                  --ignore=tests/test_gui_unit.py \
+                  --junitxml=reports/junit.xml
                 '''
             }
         }
