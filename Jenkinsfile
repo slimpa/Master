@@ -1,8 +1,17 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.11'
+            args '-u root:root'
+        }
+    }
 
     triggers {
         cron('0 1 * * *')
+    }
+
+    options {
+        timestamps()
     }
 
     stages {
@@ -12,14 +21,13 @@ pipeline {
             }
         }
 
-        stage('Show environment') {
+        stage('Show workspace') {
             steps {
                 sh '''
                     echo "Workspace: $(pwd)"
                     ls -la
-                    python3 --version || python --version || true
-                    pip3 --version || pip --version || true
-                    pytest --version || true
+                    python --version
+                    pip --version
                 '''
             }
         }
@@ -27,8 +35,9 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 sh '''
-                    python3 -m pip install --upgrade pip || python -m pip install --upgrade pip
-                    pip3 install -r requirements.txt || pip install -r requirements.txt
+                    python -m pip install --upgrade pip
+                    pip install pytest pytest-cov
+                    pip install face-recognition opencv-python pillow pyyaml
                 '''
             }
         }
@@ -37,7 +46,11 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p reports
-                    pytest tests --junitxml=reports/junit.xml
+                    pytest tests \
+                      --junitxml=reports/junit.xml \
+                      --cov=face_app \
+                      --cov-report=xml:reports/coverage.xml \
+                      --cov-report=term-missing
                 '''
             }
         }
@@ -45,8 +58,8 @@ pipeline {
 
     post {
         always {
-            junit 'reports/junit.xml'
-            archiveArtifacts artifacts: 'reports/**', fingerprint: true
+            junit allowEmptyResults: true, testResults: 'reports/junit.xml'
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/**', fingerprint: true
         }
     }
 }
