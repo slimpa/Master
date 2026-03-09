@@ -23,6 +23,7 @@ pipeline {
                     ls -la
                     python3 --version
                     pip3 --version
+                    cmake --version
                 '''
             }
         }
@@ -30,6 +31,7 @@ pipeline {
         stage('Create venv') {
             steps {
                 sh '''
+                    rm -rf .ci_venv
                     python3 -m venv .ci_venv
                     . .ci_venv/bin/activate
                     python --version
