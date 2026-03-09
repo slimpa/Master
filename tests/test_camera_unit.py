@@ -20,6 +20,7 @@ class FakeCap:
         self.released = True
 
 
+@pytest.mark.requirement("SWR_07")
 def test_camera_open_read_release_ok():
     """UT_SWR_07_02
     Camera backend must open, read and release.
@@ -32,6 +33,7 @@ def test_camera_open_read_release_ok():
     assert cam.cap is None
 
 
+@pytest.mark.requirement("SWR_07")
 def test_camera_open_fail_raises():
     """UT_SWR_07_03
     Camera must raise if not accessible.
@@ -41,6 +43,7 @@ def test_camera_open_fail_raises():
         cam.open()
 
 
+@pytest.mark.requirement("SWR_07")
 def test_camera_read_fail_raises():
     """UT_SWR_07_04
     Camera must raise if frame cannot be captured.
@@ -52,6 +55,7 @@ def test_camera_read_fail_raises():
     cam.release()
 
 
+@pytest.mark.requirement("SWR_07")
 def test_get_frame_uses_camera_class(monkeypatch):
     """UT_SWR_07_05
     get_frame returns frame and releases camera.
@@ -67,6 +71,7 @@ def test_get_frame_uses_camera_class(monkeypatch):
     frame = get_frame()
     assert frame is not None
 
+@pytest.mark.requirement("SWR_07")
 def test_camera_release_when_none_does_not_crash():
     """UT_SWR_07_08
     release() kad je cap None ne smije crashovati.
@@ -76,6 +81,7 @@ def test_camera_release_when_none_does_not_crash():
     cam.release()
     assert cam.cap is None
 
+@pytest.mark.requirement("SWR_07")
 def test_camera_open_when_factory_returns_none_hits_not_cap_branch():
     """UT_SWR_07_09
     Pokriva granu: cap je None -> Camera not accessible.

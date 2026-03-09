@@ -27,6 +27,7 @@ class FakeCap:
         return True
 
 
+@pytest.mark.requirement("SWR_04")
 def test_gui_init_camera_not_accessible():
     """UT_SWR_04_02
     GUI must raise when camera not accessible.
@@ -100,6 +101,7 @@ def test_gui_update_once_open_closed_alert_paths(tmp_path):
     gui.close()
 
 
+@pytest.mark.requirement("SWR_07")
 def test_gui_stop_prevents_update():
     """UT_SWR_07_06
     Stop should prevent update_once from doing work.

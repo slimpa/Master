@@ -1,3 +1,4 @@
+import pytest
 import numpy as np
 import tkinter as tk
 from face_app.gui import DriverMonitoringGUI
@@ -26,6 +27,7 @@ class FakeCap:
         return True
 
 
+@pytest.mark.requirement("SWR_08")
 def test_gui_snapshot_no_frame_message(tmp_path):
     """UT_SWR_08_02
     Snapshot grana kada nema last_frame.
@@ -46,6 +48,7 @@ def test_gui_snapshot_no_frame_message(tmp_path):
     gui.close()
 
 
+@pytest.mark.requirement("SWR_05")
 def test_gui_mode_and_threshold_handlers_update_state():
     """UT_SWR_05_02
     _on_mode i _on_threshold ažuriraju internal state.
@@ -67,6 +70,7 @@ def test_gui_mode_and_threshold_handlers_update_state():
     gui.close()
 
 
+@pytest.mark.requirement("SWR_07")
 def test_gui_toggle_run_changes_button_text():
     """UT_SWR_07_07
     toggle_run mijenja running stanje i tekst dugmeta.

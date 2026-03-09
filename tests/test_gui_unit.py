@@ -1,8 +1,10 @@
+import pytest
 import numpy as np
 import cv2
 from face_app.recognizer import evaluate_eye_state
 
 
+@pytest.mark.requirement("SWR_04")
 def test_instant_mode_available():
     """
     UT_SWR_04_01
@@ -12,6 +14,7 @@ def test_instant_mode_available():
     assert status == "alert"
 
 
+@pytest.mark.requirement("SWR_04")
 def test_timed_mode_threshold_behavior():
     """
     UT_SWR_05_01
@@ -24,6 +27,7 @@ def test_timed_mode_threshold_behavior():
     assert status == "alert"
 
 
+@pytest.mark.requirement("SWR_06")
 def test_status_open_is_generated():
     """
     UT_SWR_06_01
@@ -33,6 +37,7 @@ def test_status_open_is_generated():
     assert status == "open"
 
 
+@pytest.mark.requirement("SWR_06")
 def test_start_stop_does_not_break_logic():
     """
     UT_SWR_07_01
@@ -42,6 +47,7 @@ def test_start_stop_does_not_break_logic():
     assert status in ("open", "closed", "alert")
 
 
+@pytest.mark.requirement("SWR_07")
 def test_snapshot_can_save_frame(tmp_path):
     """
     UT_SWR_08_01

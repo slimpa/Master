@@ -29,6 +29,7 @@ class FakeCap:
         return True
 
 
+@pytest.mark.requirement("SWR_06")
 def test_gui_update_once_no_frame_branch():
     """UT_SWR_06_05
     Pokriva NO FRAME granu u update_once().
@@ -45,6 +46,7 @@ def test_gui_update_once_no_frame_branch():
     gui.close()
 
 
+@pytest.mark.requirement("SWR_08")
 def test_gui_snapshot_imwrite_fail_branch(monkeypatch, tmp_path):
     """UT_SWR_08_04
     Pokriva snapshot granu gdje cv2.imwrite vrati False.
@@ -64,6 +66,7 @@ def test_gui_snapshot_imwrite_fail_branch(monkeypatch, tmp_path):
     gui.close()
 
 
+@pytest.mark.requirement("SWR_06")
 def test_gui_close_release_exception_branch(monkeypatch):
     """UT_SWR_06_06
     Pokriva close() granu gdje cap.release() baci exception.
@@ -78,6 +81,7 @@ def test_gui_close_release_exception_branch(monkeypatch):
     gui.close()
 
 
+@pytest.mark.requirement("SWR_06")
 def test_gui_start_without_mainloop_covers_protocol_and_loop_setup(monkeypatch):
     """UT_SWR_06_07
     Pokriva start(run_mainloop=False) grane: protocol + loop scheduling.

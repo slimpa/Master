@@ -1,7 +1,9 @@
+import pytest
 import numpy as np
 import face_app.recognizer as rec
 
 
+@pytest.mark.requirement("SWR_01")
 def test_detect_faces_and_eyes_executes_face_and_eye_loops(monkeypatch):
     """UT_SWR_01_03
     Pokriva grane u detect_faces_and_eyes: face loop + eyes loop.

@@ -1,3 +1,4 @@
+import pytest
 import numpy as np
 from face_app.recognizer import detect_faces_and_eyes
 
@@ -7,6 +8,7 @@ from face_app.recognizer import detect_faces_and_eyes
 # ===============================
 
 
+@pytest.mark.requirement("SWR_01")
 def test_detect_faces_and_eyes_returns_list():
     """
     UT_SWR_01_01
@@ -17,6 +19,7 @@ def test_detect_faces_and_eyes_returns_list():
     assert isinstance(detections, list)
 
 
+@pytest.mark.requirement("SWR_01")
 def test_detect_faces_and_eyes_handles_empty_frame():
     """
     UT_SWR_01_02
@@ -27,6 +30,7 @@ def test_detect_faces_and_eyes_handles_empty_frame():
     assert detections is not None
 
 
+@pytest.mark.requirement("SWR_01")
 def test_each_detection_contains_required_fields():
     """
     UT_SWR_02_01
