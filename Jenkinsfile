@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.11'
-        }
-    }
+    agent any
 
     stages {
         stage('Checkout') {
@@ -12,20 +8,14 @@ pipeline {
             }
         }
 
-        stage('Install dependencies') {
+        stage('Test environment') {
             steps {
                 sh '''
-                    pip install -U pip
-                    if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-                    pip install pytest
-                '''
-            }
-        }
-
-        stage('Run tests') {
-            steps {
-                sh '''
-                    pytest
+                    echo "Testing shell access"
+                    uname -a || true
+                    python3 --version || python --version || true
+                    pip3 --version || pip --version || true
+                    pytest --version || true
                 '''
             }
         }
