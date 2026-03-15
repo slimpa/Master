@@ -137,7 +137,7 @@ for test in tests:
         duration = test["setup"].get("duration")
 
     doc = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "@timestamp": datetime.now(timezone.utc).isoformat(),
         "test_id": test_id,
         "requirement_id": requirement_ids,
         "status": outcome,
