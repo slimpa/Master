@@ -14,7 +14,7 @@ def test_system_sr01_real_time_monitoring_runs():
     assert isinstance(detections, list)
 
 
-@pytest.mark.requirement("SR_01")
+@pytest.mark.requirement("SR_02")
 def test_system_sr02_alert_after_3_seconds():
     """
     ST_SR_02_01

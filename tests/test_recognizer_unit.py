@@ -30,7 +30,7 @@ def test_detect_faces_and_eyes_handles_empty_frame():
     assert detections is not None
 
 
-@pytest.mark.requirement("SWR_01")
+@pytest.mark.requirement("SWR_02")
 def test_each_detection_contains_required_fields():
     """
     UT_SWR_02_01

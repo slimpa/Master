@@ -14,7 +14,7 @@ def test_instant_mode_available():
     assert status == "alert"
 
 
-@pytest.mark.requirement("SWR_04")
+@pytest.mark.requirement("SWR_05")
 def test_timed_mode_threshold_behavior():
     """
     UT_SWR_05_01
@@ -37,7 +37,7 @@ def test_status_open_is_generated():
     assert status == "open"
 
 
-@pytest.mark.requirement("SWR_06")
+@pytest.mark.requirement("SWR_07")
 def test_start_stop_does_not_break_logic():
     """
     UT_SWR_07_01
@@ -47,7 +47,7 @@ def test_start_stop_does_not_break_logic():
     assert status in ("open", "closed", "alert")
 
 
-@pytest.mark.requirement("SWR_07")
+@pytest.mark.requirement("SWR_08")
 def test_snapshot_can_save_frame(tmp_path):
     """
     UT_SWR_08_01

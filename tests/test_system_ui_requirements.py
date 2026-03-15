@@ -38,7 +38,7 @@ def test_system_threshold_effect_in_timed_mode():
         assert False, "evaluate_eye_state nema threshold_sec parametar (potrebno za SR_04)."
 
 
-@pytest.mark.requirement("SR_04")
+@pytest.mark.requirement("SR_05")
 def test_system_visual_status_is_generated():
     """
     ST_SR_05_01
