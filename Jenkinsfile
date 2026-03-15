@@ -63,7 +63,7 @@ pipeline {
         }
 
         stage('Publish results to ELK') {
-            steps {
+            steps {elasticsearch:9200
                 sh '''
                 . .ci_venv/bin/activate
 
@@ -74,7 +74,7 @@ import urllib.request
 from datetime import datetime, timezone
 
 REPORT = "reports/pytest-report.json"
-ELASTIC_URL = os.environ.get("ELASTIC_URL", "http://host.docker.internal:9200")
+ELASTIC_URL = os.environ.get("ELASTIC_URL", "http://elasticsearch:9200")
 INDEX = os.environ.get("ELASTIC_INDEX", "test-results")
 
 BUILD_NUMBER = os.environ.get("BUILD_NUMBER", "")
