@@ -76,7 +76,7 @@ import urllib.request
 from datetime import datetime, timezone
 
 REPORT = "reports/pytest-report.json"
-ELASTIC_URL = os.environ.get("ELASTIC_URL", "http://elasticsearch:9200")
+ELASTIC_URL = os.environ.get("ELASTIC_URL", "http://localhost:9200")
 INDEX = os.environ.get("ELASTIC_INDEX", "test-results")
 
 BUILD_NUMBER = os.environ.get("BUILD_NUMBER", "")
