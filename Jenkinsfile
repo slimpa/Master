@@ -49,21 +49,18 @@ pipeline {
                 mkdir -p reports
 
                 pytest tests \
-                  --ignore=tests/test_gui_branches.py \
-                  --ignore=tests/test_gui_missing_branches.py \
-                  --ignore=tests/test_gui_remaining_branches.py \
-                  --ignore=tests/test_gui_runtime.py \
-                  --ignore=tests/test_gui_unit.py \
-                  --ignore=tests/test_main_entrypoint.py \
+                  -v \
                   --json-report \
                   --json-report-file=reports/pytest-report.json \
-                  --junitxml=reports/junit.xml
+                  --junitxml=reports/junit.xml \
+                  --cov=face_app \
+                  --cov-report=xml:reports/coverage.xml
                 '''
             }
         }
 
         stage('Publish results to ELK') {
-            steps {elasticsearch:9200
+            steps {
                 sh '''
                 . .ci_venv/bin/activate
 
@@ -92,7 +89,6 @@ def detect_level(nodeid: str, test_name: str) -> str:
     return "unit"
 
 def extract_test_id(test: dict) -> str:
-    # prvo probaj iz custom markera @pytest.mark.test_id("UT_SWR_03_04")
     markers = test.get("markers", [])
     for marker in markers:
         name = marker.get("name", "")
@@ -101,11 +97,10 @@ def extract_test_id(test: dict) -> str:
             if args:
                 return str(args[0])
 
-    # fallback na ime testa iz nodeid
     nodeid = test.get("nodeid", "unknown")
     return nodeid.split("::")[-1]
 
-def extract_requirement_ids(test: dict) -> list[str]:
+def extract_requirement_ids(test: dict):
     reqs = []
     markers = test.get("markers", [])
 
