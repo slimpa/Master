@@ -12,12 +12,22 @@ pipeline {
             }
         }
 
+        stage('Install system dependencies') {
+            steps {
+                sh '''
+                apt-get update
+                apt-get install -y python3-tk xvfb
+                '''
+            }
+        }
+
         stage('Show environment') {
             steps {
                 sh '''
                 echo "Workspace: $(pwd)"
                 ls -la
                 python3 --version
+                python3 -c "import tkinter; print('tkinter OK')"
                 '''
             }
         }
@@ -48,7 +58,7 @@ pipeline {
                 . .ci_venv/bin/activate
                 mkdir -p reports
 
-                pytest tests \
+                xvfb-run -a pytest tests \
                   -v \
                   --json-report \
                   --json-report-file=reports/pytest-report.json \
@@ -91,8 +101,7 @@ def detect_level(nodeid: str, test_name: str) -> str:
 def extract_test_id(test: dict) -> str:
     markers = test.get("markers", [])
     for marker in markers:
-        name = marker.get("name", "")
-        if name == "test_id":
+        if marker.get("name") == "test_id":
             args = marker.get("args", [])
             if args:
                 return str(args[0])
@@ -112,10 +121,7 @@ def extract_requirement_ids(test: dict):
                 if value and value not in reqs:
                     reqs.append(value)
 
-    if reqs:
-        return reqs
-
-    return ["UNKNOWN"]
+    return reqs if reqs else ["UNKNOWN"]
 
 with open(REPORT, "r", encoding="utf-8") as f:
     data = json.load(f)
