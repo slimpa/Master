@@ -27,6 +27,7 @@ class FakeCap:
         return True
 
 
+@pytest.mark.test_id("UT_SWR_08_02")
 @pytest.mark.requirement("SWR_08")
 def test_gui_snapshot_no_frame_message(tmp_path):
     """UT_SWR_08_02
@@ -48,6 +49,7 @@ def test_gui_snapshot_no_frame_message(tmp_path):
     gui.close()
 
 
+@pytest.mark.test_id("UT_SWR_05_02")
 @pytest.mark.requirement("SWR_05")
 def test_gui_mode_and_threshold_handlers_update_state():
     """UT_SWR_05_02
@@ -70,6 +72,7 @@ def test_gui_mode_and_threshold_handlers_update_state():
     gui.close()
 
 
+@pytest.mark.test_id("UT_SWR_07_07")
 @pytest.mark.requirement("SWR_07")
 def test_gui_toggle_run_changes_button_text():
     """UT_SWR_07_07

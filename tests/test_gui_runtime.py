@@ -27,6 +27,7 @@ class FakeCap:
         return True
 
 
+@pytest.mark.test_id("UT_SWR_04_02")
 @pytest.mark.requirement("SWR_04")
 def test_gui_init_camera_not_accessible():
     """UT_SWR_04_02
@@ -41,6 +42,8 @@ def test_gui_init_camera_not_accessible():
     root.destroy()
 
 
+@pytest.mark.test_id("IT_SYS_01_04")
+@pytest.mark.requirement("SYS_01")
 def test_gui_update_once_open_closed_alert_paths(tmp_path):
     """IT_SYS_01_04
     GUI update_once must handle OPEN/CLOSED/ALERT and snapshot.
@@ -101,6 +104,7 @@ def test_gui_update_once_open_closed_alert_paths(tmp_path):
     gui.close()
 
 
+@pytest.mark.test_id("UT_SWR_07_06")
 @pytest.mark.requirement("SWR_07")
 def test_gui_stop_prevents_update():
     """UT_SWR_07_06

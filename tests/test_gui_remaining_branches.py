@@ -29,6 +29,7 @@ class FakeCap:
         return True
 
 
+@pytest.mark.test_id("UT_SWR_06_05")
 @pytest.mark.requirement("SWR_06")
 def test_gui_update_once_no_frame_branch():
     """UT_SWR_06_05
@@ -46,6 +47,7 @@ def test_gui_update_once_no_frame_branch():
     gui.close()
 
 
+@pytest.mark.test_id("UT_SWR_08_04")
 @pytest.mark.requirement("SWR_08")
 def test_gui_snapshot_imwrite_fail_branch(monkeypatch, tmp_path):
     """UT_SWR_08_04
@@ -66,6 +68,7 @@ def test_gui_snapshot_imwrite_fail_branch(monkeypatch, tmp_path):
     gui.close()
 
 
+@pytest.mark.test_id("UT_SWR_06_06")
 @pytest.mark.requirement("SWR_06")
 def test_gui_close_release_exception_branch(monkeypatch):
     """UT_SWR_06_06
@@ -81,6 +84,7 @@ def test_gui_close_release_exception_branch(monkeypatch):
     gui.close()
 
 
+@pytest.mark.test_id("UT_SWR_06_07")
 @pytest.mark.requirement("SWR_06")
 def test_gui_start_without_mainloop_covers_protocol_and_loop_setup(monkeypatch):
     """UT_SWR_06_07

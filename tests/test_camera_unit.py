@@ -20,6 +20,7 @@ class FakeCap:
         self.released = True
 
 
+@pytest.mark.test_id("UT_SWR_07_02")
 @pytest.mark.requirement("SWR_07")
 def test_camera_open_read_release_ok():
     """UT_SWR_07_02
@@ -33,6 +34,7 @@ def test_camera_open_read_release_ok():
     assert cam.cap is None
 
 
+@pytest.mark.test_id("UT_SWR_07_03")
 @pytest.mark.requirement("SWR_07")
 def test_camera_open_fail_raises():
     """UT_SWR_07_03
@@ -43,6 +45,7 @@ def test_camera_open_fail_raises():
         cam.open()
 
 
+@pytest.mark.test_id("UT_SWR_07_04")
 @pytest.mark.requirement("SWR_07")
 def test_camera_read_fail_raises():
     """UT_SWR_07_04
@@ -55,6 +58,7 @@ def test_camera_read_fail_raises():
     cam.release()
 
 
+@pytest.mark.test_id("UT_SWR_07_05")
 @pytest.mark.requirement("SWR_07")
 def test_get_frame_uses_camera_class(monkeypatch):
     """UT_SWR_07_05
@@ -71,6 +75,7 @@ def test_get_frame_uses_camera_class(monkeypatch):
     frame = get_frame()
     assert frame is not None
 
+@pytest.mark.test_id("UT_SWR_07_08")
 @pytest.mark.requirement("SWR_07")
 def test_camera_release_when_none_does_not_crash():
     """UT_SWR_07_08
@@ -81,6 +86,7 @@ def test_camera_release_when_none_does_not_crash():
     cam.release()
     assert cam.cap is None
 
+@pytest.mark.test_id("UT_SWR_07_09")
 @pytest.mark.requirement("SWR_07")
 def test_camera_open_when_factory_returns_none_hits_not_cap_branch():
     """UT_SWR_07_09

@@ -2,6 +2,7 @@ import pytest
 from face_app.recognizer import evaluate_eye_state
 
 
+@pytest.mark.test_id("UT_SWR_03_01")
 @pytest.mark.requirement("SWR_03")
 def test_instant_mode_alert_when_closed():
     """UT_SWR_03_01
@@ -12,6 +13,7 @@ def test_instant_mode_alert_when_closed():
     assert start_time is None
 
 
+@pytest.mark.test_id("UT_SWR_03_02")
 @pytest.mark.requirement("SWR_03")
 def test_instant_mode_open_when_open():
     """UT_SWR_03_02
@@ -22,6 +24,7 @@ def test_instant_mode_open_when_open():
     assert start_time is None
 
 
+@pytest.mark.test_id("UT_SWR_03_03")
 @pytest.mark.requirement("SWR_03")
 def test_timed_mode_no_alert_before_threshold():
     """UT_SWR_03_03
@@ -32,6 +35,7 @@ def test_timed_mode_no_alert_before_threshold():
     assert start_time == 5
 
 
+@pytest.mark.test_id("UT_SWR_03_04")
 @pytest.mark.requirement("SWR_03")
 def test_timed_mode_alert_at_threshold():
     """UT_SWR_03_04
@@ -41,6 +45,7 @@ def test_timed_mode_alert_at_threshold():
     assert status == "alert"
 
 
+@pytest.mark.test_id("UT_SWR_03_05")
 @pytest.mark.requirement("SWR_03")
 def test_timed_mode_resets_when_open():
     """UT_SWR_03_05

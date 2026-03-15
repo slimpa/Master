@@ -22,6 +22,7 @@ class FakeCap:
         raise RuntimeError("set failed")
 
 
+@pytest.mark.test_id("UT_SWR_06_02")
 @pytest.mark.requirement("SWR_06")
 def test_gui_theme_use_exception_branch(monkeypatch):
     """UT_SWR_06_02
@@ -45,6 +46,7 @@ def test_gui_theme_use_exception_branch(monkeypatch):
     gui.close()
 
 
+@pytest.mark.test_id("UT_SWR_06_03")
 @pytest.mark.requirement("SWR_06")
 def test_gui_cap_set_exception_branch():
     """UT_SWR_06_03
@@ -58,6 +60,7 @@ def test_gui_cap_set_exception_branch():
     gui.close()
 
 
+@pytest.mark.test_id("UT_SWR_06_04")
 @pytest.mark.requirement("SWR_06")
 def test_gui_close_destroy_exception_branch(monkeypatch):
     """UT_SWR_06_04
@@ -75,6 +78,7 @@ def test_gui_close_destroy_exception_branch(monkeypatch):
     gui.close()
 
 
+@pytest.mark.test_id("UT_SWR_08_03")
 @pytest.mark.requirement("SWR_08")
 def test_gui_snapshot_makedirs_exception_branch(monkeypatch, tmp_path):
     """UT_SWR_08_03

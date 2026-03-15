@@ -8,6 +8,7 @@ from face_app.recognizer import detect_faces_and_eyes
 # ===============================
 
 
+@pytest.mark.test_id("UT_SWR_01_01")
 @pytest.mark.requirement("SWR_01")
 def test_detect_faces_and_eyes_returns_list():
     """
@@ -19,6 +20,7 @@ def test_detect_faces_and_eyes_returns_list():
     assert isinstance(detections, list)
 
 
+@pytest.mark.test_id("UT_SWR_01_02")
 @pytest.mark.requirement("SWR_01")
 def test_detect_faces_and_eyes_handles_empty_frame():
     """
@@ -30,6 +32,7 @@ def test_detect_faces_and_eyes_handles_empty_frame():
     assert detections is not None
 
 
+@pytest.mark.test_id("UT_SWR_02_01")
 @pytest.mark.requirement("SWR_02")
 def test_each_detection_contains_required_fields():
     """

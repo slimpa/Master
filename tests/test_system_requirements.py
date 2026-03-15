@@ -3,6 +3,7 @@ import numpy as np
 from face_app.recognizer import detect_faces_and_eyes, evaluate_eye_state
 
 
+@pytest.mark.test_id("ST_SR_01_01")
 @pytest.mark.requirement("SR_01")
 def test_system_sr01_real_time_monitoring_runs():
     """
@@ -14,6 +15,7 @@ def test_system_sr01_real_time_monitoring_runs():
     assert isinstance(detections, list)
 
 
+@pytest.mark.test_id("ST_SR_02_01")
 @pytest.mark.requirement("SR_02")
 def test_system_sr02_alert_after_3_seconds():
     """
@@ -24,6 +26,7 @@ def test_system_sr02_alert_after_3_seconds():
     assert status == "alert"
 
 
+@pytest.mark.test_id("ST_SR_02_02")
 @pytest.mark.requirement("SR_02")
 def test_system_sr02_no_alert_before_threshold():
     """
@@ -35,6 +38,7 @@ def test_system_sr02_no_alert_before_threshold():
     assert start == 10
 
 
+@pytest.mark.test_id("ST_SR_02_03")
 @pytest.mark.requirement("SR_02")
 def test_system_sr02_reset_when_open():
     """

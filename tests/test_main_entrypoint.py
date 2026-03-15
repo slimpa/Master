@@ -4,6 +4,7 @@ import sys
 import types
 
 
+@pytest.mark.test_id("ST_SR_01_02")
 @pytest.mark.requirement("SR_01")
 def test_main_calls_run_gui(monkeypatch):
     """ST_SR_01_02
@@ -25,6 +26,7 @@ def test_main_calls_run_gui(monkeypatch):
     assert called["v"] is True
 
 
+@pytest.mark.test_id("ST_SR_01_03")
 @pytest.mark.requirement("SR_01")
 def test_main_module_runs_dunder_main(monkeypatch):
     """ST_SR_01_03

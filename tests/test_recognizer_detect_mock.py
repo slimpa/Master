@@ -3,6 +3,7 @@ import numpy as np
 import face_app.recognizer as rec
 
 
+@pytest.mark.test_id("UT_SWR_01_03")
 @pytest.mark.requirement("SWR_01")
 def test_detect_faces_and_eyes_executes_face_and_eye_loops(monkeypatch):
     """UT_SWR_01_03

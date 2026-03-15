@@ -4,6 +4,7 @@ import cv2
 from face_app.recognizer import evaluate_eye_state
 
 
+@pytest.mark.test_id("UT_SWR_04_01")
 @pytest.mark.requirement("SWR_04")
 def test_instant_mode_available():
     """
@@ -14,6 +15,7 @@ def test_instant_mode_available():
     assert status == "alert"
 
 
+@pytest.mark.test_id("UT_SWR_05_01")
 @pytest.mark.requirement("SWR_05")
 def test_timed_mode_threshold_behavior():
     """
@@ -27,6 +29,7 @@ def test_timed_mode_threshold_behavior():
     assert status == "alert"
 
 
+@pytest.mark.test_id("UT_SWR_06_01")
 @pytest.mark.requirement("SWR_06")
 def test_status_open_is_generated():
     """
@@ -37,6 +40,7 @@ def test_status_open_is_generated():
     assert status == "open"
 
 
+@pytest.mark.test_id("UT_SWR_07_01")
 @pytest.mark.requirement("SWR_07")
 def test_start_stop_does_not_break_logic():
     """
@@ -47,6 +51,7 @@ def test_start_stop_does_not_break_logic():
     assert status in ("open", "closed", "alert")
 
 
+@pytest.mark.test_id("UT_SWR_08_01")
 @pytest.mark.requirement("SWR_08")
 def test_snapshot_can_save_frame(tmp_path):
     """

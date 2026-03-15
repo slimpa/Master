@@ -2,6 +2,7 @@ import pytest
 from face_app.recognizer import evaluate_eye_state
 
 
+@pytest.mark.test_id("UT_SWR_03_06")
 @pytest.mark.requirement("SWR_03")
 def test_instant_mode_cooldown_keeps_last_alert_time():
     """UT_SWR_03_06
@@ -20,6 +21,7 @@ def test_instant_mode_cooldown_keeps_last_alert_time():
     assert last == 8.0  # još uvijek u cooldown-u
 
 
+@pytest.mark.test_id("UT_SWR_03_07")
 @pytest.mark.requirement("SWR_03")
 def test_timed_mode_sets_start_when_none():
     """UT_SWR_03_07
@@ -36,6 +38,7 @@ def test_timed_mode_sets_start_when_none():
     assert start == 2.0
 
 
+@pytest.mark.test_id("UT_SWR_03_08")
 @pytest.mark.requirement("SWR_03")
 def test_timed_mode_alert_cooldown_keeps_last_alert_time():
     """UT_SWR_03_08

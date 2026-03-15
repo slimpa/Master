@@ -1,3 +1,5 @@
+import pytest
+
 import numpy as np
 from face_app.recognizer import detect_faces_and_eyes, evaluate_eye_state
 
@@ -14,6 +16,8 @@ def _has_open_eyes_from_detections(detections):
     return False
 
 
+@pytest.mark.test_id("IT_SYS_01_01")
+@pytest.mark.requirement("SYS_01")
 def test_face_eye_pipeline_runs_end_to_end():
     """
     IT_SYS_01_01
@@ -32,6 +36,8 @@ def test_face_eye_pipeline_runs_end_to_end():
     assert start is None
 
 
+@pytest.mark.test_id("IT_SYS_02_01")
+@pytest.mark.requirement("SYS_02")
 def test_sys02_face_without_eyes_is_closed():
     """
     IT_SYS_02_01
@@ -42,6 +48,8 @@ def test_sys02_face_without_eyes_is_closed():
     assert has_open is False
 
 
+@pytest.mark.test_id("IT_SYS_03_01")
+@pytest.mark.requirement("SYS_03")
 def test_sys03_alert_after_threshold():
     """
     IT_SYS_03_01
@@ -51,6 +59,8 @@ def test_sys03_alert_after_threshold():
     assert status == "alert"
 
 
+@pytest.mark.test_id("IT_SYS_01_02")
+@pytest.mark.requirement("SYS_01")
 def test_monitoring_loop_triggers_alert():
     """
     IT_SYS_01_02
@@ -66,6 +76,8 @@ def test_monitoring_loop_triggers_alert():
     assert status == "alert"
 
 
+@pytest.mark.test_id("IT_SYS_01_03")
+@pytest.mark.requirement("SYS_01")
 def test_monitoring_loop_open_resets_timer():
     """
     IT_SYS_01_03
@@ -83,6 +95,8 @@ def test_monitoring_loop_open_resets_timer():
     assert closed_start is None
 
 
+@pytest.mark.test_id("IT_SYS_04_01")
+@pytest.mark.requirement("SYS_04")
 def test_time_tracking_logic():
     """
     IT_SYS_04_01
@@ -98,6 +112,8 @@ def test_time_tracking_logic():
     assert start == 0
 
 
+@pytest.mark.test_id("IT_SYS_05_01")
+@pytest.mark.requirement("SYS_05")
 def test_mode_switching():
     """
     IT_SYS_05_01
@@ -111,6 +127,8 @@ def test_mode_switching():
     assert start2 == 0
 
 
+@pytest.mark.test_id("IT_SYS_06_01")
+@pytest.mark.requirement("SYS_06")
 def test_threshold_integration():
     """
     IT_SYS_06_01
@@ -123,6 +141,8 @@ def test_threshold_integration():
     assert status == "alert"
 
 
+@pytest.mark.test_id("IT_SYS_07_01")
+@pytest.mark.requirement("SYS_07")
 def test_visual_feedback_integration():
     """
     IT_SYS_07_01

@@ -2,6 +2,7 @@ import pytest
 from face_app.recognizer import evaluate_eye_state
 
 
+@pytest.mark.test_id("ST_SR_03_01")
 @pytest.mark.requirement("SR_03")
 def test_system_mode_selection_supported():
     """
@@ -19,6 +20,7 @@ def test_system_mode_selection_supported():
     assert s2 in ("closed", "alert")
 
 
+@pytest.mark.test_id("ST_SR_04_01")
 @pytest.mark.requirement("SR_04")
 def test_system_threshold_effect_in_timed_mode():
     """
@@ -38,6 +40,7 @@ def test_system_threshold_effect_in_timed_mode():
         assert False, "evaluate_eye_state nema threshold_sec parametar (potrebno za SR_04)."
 
 
+@pytest.mark.test_id("ST_SR_05_01")
 @pytest.mark.requirement("SR_05")
 def test_system_visual_status_is_generated():
     """
