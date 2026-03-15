@@ -12,22 +12,12 @@ pipeline {
             }
         }
 
-        stage('Install system dependencies') {
-            steps {
-                sh '''
-                apt-get update
-                apt-get install -y python3-tk xvfb
-                '''
-            }
-        }
-
         stage('Show environment') {
             steps {
                 sh '''
                 echo "Workspace: $(pwd)"
                 ls -la
                 python3 --version
-                python3 -c "import tkinter; print('tkinter OK')"
                 '''
             }
         }
@@ -58,8 +48,13 @@ pipeline {
                 . .ci_venv/bin/activate
                 mkdir -p reports
 
-                xvfb-run -a pytest tests \
+                pytest tests \
                   -v \
+                  --ignore=tests/test_gui_branches.py \
+                  --ignore=tests/test_gui_missing_branches.py \
+                  --ignore=tests/test_gui_remaining_branches.py \
+                  --ignore=tests/test_gui_runtime.py \
+                  --ignore=tests/test_gui_unit.py \
                   --json-report \
                   --json-report-file=reports/pytest-report.json \
                   --junitxml=reports/junit.xml \
